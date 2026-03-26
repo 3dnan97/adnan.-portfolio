@@ -1,0 +1,132 @@
+---
+import type { PortfolioContent } from "../../data/portfolio";
+
+interface Props {
+  content: PortfolioContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section id="experience" class="section dark reveal">
+  <div class="container" style="display:grid;gap:24px;width:100%;">
+    <div class="stagger-child">
+      <div class="kicker">{content.sectionLabels.experience}</div>
+      <h2 style="font-size:clamp(34px,6vw,58px);margin-top:8px;">
+        {content.experience.heading}
+      </h2>
+    </div>
+
+    <div class="timeline">
+      {
+        content.experience.items.map((entry, i) => (
+          <article class={`timeline-entry motion-lift stagger-child`}>
+            <div class="timeline-dot" />
+            <div class="timeline-body">
+              <p class="timeline-meta">
+                {entry.company} · {entry.period}
+              </p>
+              <h3>{entry.title}</h3>
+              {entry.bullets.length > 0 && (
+                <ul>
+                  {entry.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    display: grid;
+    gap: 0;
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.4;
+  }
+
+  .timeline-entry {
+    position: relative;
+    padding: 20px 20px 20px 24px;
+    border: 1px solid #2e2a25;
+    margin-bottom: 12px;
+    display: grid;
+    gap: 10px;
+    background: #1e1b16;
+    transition: background 300ms ease, border-color 300ms ease,
+      transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .timeline-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-entry:hover {
+    background: #221f19;
+    border-color: rgba(196, 98, 45, 0.4);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -35px;
+    top: 22px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #1a1612;
+    box-shadow: 0 0 0 3px rgba(196, 98, 45, 0.2);
+    transition: box-shadow 300ms ease;
+  }
+
+  .timeline-entry:hover .timeline-dot {
+    box-shadow: 0 0 0 5px rgba(196, 98, 45, 0.18);
+  }
+
+  .timeline-body {
+    display: grid;
+    gap: 6px;
+  }
+
+  .timeline-meta {
+    margin: 0;
+    color: #6f6660;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  h3 {
+    font-size: clamp(22px, 4vw, 30px);
+    color: #f5f0e8;
+  }
+
+  ul {
+    margin: 4px 0 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 5px;
+  }
+
+  li {
+    color: var(--dark-soft);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/astro/Hero.astro";
+import About from "../../components/astro/About.astro";
+import ExperienceShell from "../../components/astro/ExperienceShell.astro";
+import ProjectsShell from "../../components/astro/ProjectsShell.astro";
+import SkillsShell from "../../components/astro/SkillsShell.astro";
+import ContactShell from "../../components/astro/ContactShell.astro";
+import { getPortfolioContent } from "../../data/portfolio";
+
+const content = getPortfolioContent("ar");
+---
+
+<BaseLayout title={content.pageTitle} lang={content.locale} dir={content.direction}>
+  <Hero content={content} />
+  <About content={content} />
+  <ExperienceShell content={content} />
+  <ProjectsShell content={content} />
+  <SkillsShell content={content} />
+  <ContactShell content={content} />
+</BaseLayout>

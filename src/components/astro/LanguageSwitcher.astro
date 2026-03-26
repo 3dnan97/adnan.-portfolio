@@ -1,0 +1,55 @@
+---
+import type { Locale } from "../../data/portfolio";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const languageLinks: Array<{ code: Locale; href: string; label: string }> = [
+  { code: "en", href: "/", label: "EN" },
+  { code: "de", href: "/de/", label: "DE" },
+  { code: "ar", href: "/ar/", label: "AR" },
+];
+---
+
+<nav aria-label="Language switcher" style="display:inline-flex;gap:8px;">
+  {
+    languageLinks.map((item) => {
+      const isActive = item.code === locale;
+      return (
+        <a
+          href={item.href}
+          aria-current={isActive ? "page" : undefined}
+          style={`
+          border:1px solid rgba(26,22,18,0.2);
+          background:${isActive ? "#1a1612" : "transparent"};
+          color:${isActive ? "#f5f0e8" : "#1a1612"};
+          padding:6px 10px;
+          font-size:11px;
+          letter-spacing:0.08em;
+          text-transform:uppercase;
+          text-decoration:none;
+          display:inline-flex;
+          align-items:center;
+        `}
+        >
+          {item.label}
+        </a>
+      );
+    })
+  }
+</nav>
+
+<style>
+  a {
+    transition: background-color 0.25s ease, transform 0.25s ease;
+  }
+  a:hover {
+    background-color: var(--accent) !important;
+    color: var(--bg) !important;
+    border-color: var(--dark) !important;
+    transform: translateY(-3px);
+  }
+</style>

@@ -1,0 +1,511 @@
+---
+interface Props {
+  title: string;
+  lang: "en" | "de" | "ar";
+  dir: "ltr" | "rtl";
+}
+
+const { title, lang, dir } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --bg: #f5f0e8;
+        --bg-alt: #ffffff;
+        --ink: #1a1612;
+        --muted: #4a4540;
+        --soft: #8c8580;
+        --accent: #c4622d;
+        --accent-light: rgba(196, 98, 45, 0.12);
+        --accent-glow: 0 0 0 1px rgba(196, 98, 45, 0.25),
+          0 8px 24px rgba(196, 98, 45, 0.1);
+        --dark: #1a1612;
+        --dark-soft: #a8a29e;
+        --line: #e8e3dc;
+        --surface: #efe8dd;
+        --surface-dark: #222018;
+        --radius: 2px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c8c0b4;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.55;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        overscroll-behavior-y: none;
+      }
+
+      /* Subtle grain texture */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 180px;
+      }
+
+      /* Scroll progress bar */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 10000;
+        transition: width 0.12s linear;
+        transform-origin: left;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1120px;
+        padding-inline: 20px;
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: 72px 0;
+        border-top: 1px solid var(--line);
+        min-height: 100svh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        display: flex;
+        align-items: center;
+      }
+
+      /* ── Reveal animation ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger children inside revealed sections */
+      .reveal.is-visible .stagger-child {
+        animation: stagger-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .reveal.is-visible .stagger-child:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .reveal.is-visible .stagger-child:nth-child(2) {
+        animation-delay: 0.12s;
+      }
+      .reveal.is-visible .stagger-child:nth-child(3) {
+        animation-delay: 0.19s;
+      }
+      .reveal.is-visible .stagger-child:nth-child(4) {
+        animation-delay: 0.26s;
+      }
+      .reveal.is-visible .stagger-child:nth-child(5) {
+        animation-delay: 0.33s;
+      }
+      .reveal.is-visible .stagger-child:nth-child(n + 6) {
+        animation-delay: 0.38s;
+      }
+
+      @keyframes stagger-up {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .motion-lift {
+        transition: transform 300ms ease, box-shadow 300ms ease,
+          border-color 300ms ease;
+      }
+
+      .motion-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 28px rgba(26, 22, 18, 0.08);
+        border-color: rgba(196, 98, 45, 0.35);
+      }
+
+      .soft-fade-in {
+        animation: soft-fade-in 700ms ease both;
+      }
+
+      .hero-float {
+        animation: hero-float 8s ease-in-out infinite;
+      }
+
+      @keyframes soft-fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes hero-float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(12px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html:focus-within {
+          scroll-behavior: auto;
+        }
+        body {
+          scroll-behavior: auto;
+        }
+
+        .reveal,
+        .motion-lift,
+        .soft-fade-in,
+        .hero-float {
+          animation: none !important;
+          transition: none !important;
+          transform: none !important;
+          opacity: 1 !important;
+        }
+      }
+
+      .section.dark {
+        background: var(--dark);
+        color: #f5f0e8;
+        border-top-color: #2e2a25;
+      }
+
+      .section.dark p,
+      .section.dark li {
+        color: var(--dark-soft);
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .kicker::before {
+        content: "";
+        width: 20px;
+        height: 1px;
+        background: var(--accent);
+      }
+
+      .chip {
+        display: inline-flex;
+        padding: 4px 10px;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        border: 1px solid var(--line);
+        background: #ede8df;
+        color: var(--muted);
+        border-radius: 100px;
+        transition: background 200ms ease, border-color 200ms ease,
+          color 200ms ease;
+      }
+
+      .chip:hover {
+        background: var(--accent-light);
+        border-color: rgba(196, 98, 45, 0.3);
+        color: var(--accent);
+      }
+
+      @media (max-width: 900px) {
+        body {
+          scroll-snap-type: none;
+        }
+
+        .section {
+          scroll-snap-align: none;
+          scroll-snap-stop: normal;
+          min-height: auto;
+        }
+
+        .container {
+          padding-inline: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scroll-progress"></div>
+    <slot />
+    <script>
+      if (typeof window !== "undefined") {
+        // ── Scroll progress bar ──
+        const progressBar = document.getElementById("scroll-progress");
+        const updateProgress = () => {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          if (progressBar) progressBar.style.width = `${pct}%`;
+        };
+        window.addEventListener("scroll", updateProgress, { passive: true });
+        updateProgress();
+
+        // ── Reveal on scroll ──
+        const nodes = Array.from(document.querySelectorAll(".reveal"));
+        if (nodes.length > 0) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  setTimeout(
+                    () => entry.target.classList.add("is-visible"),
+                    80
+                  );
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: "0px 0px -4% 0px" }
+          );
+          nodes.forEach((node) => observer.observe(node));
+        }
+
+        // ── Section scroll-jacking ──
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        const isTouchLike =
+          window.matchMedia("(pointer: coarse)").matches ||
+          window.innerWidth <= 900;
+        const sections = Array.from(document.querySelectorAll(".section"));
+
+        if (sections.length > 1 && !isTouchLike) {
+          const maxIndex = sections.length - 1;
+          let activeIndex = 0;
+          let wheelProgress = 0;
+          let isLocked = false;
+          let touchStartY = null;
+
+          const transitionMs = prefersReducedMotion ? 0 : 620;
+          const wheelThreshold = 110;
+          const touchThreshold = 52;
+
+          const clamp = (value, min, max) =>
+            Math.min(max, Math.max(min, value));
+
+          const isEditableTarget = (target) => {
+            if (!(target instanceof HTMLElement)) return false;
+            const tag = target.tagName;
+            return (
+              target.isContentEditable ||
+              tag === "INPUT" ||
+              tag === "TEXTAREA" ||
+              tag === "SELECT" ||
+              !!target.closest(
+                "input, textarea, select, [contenteditable='true']"
+              )
+            );
+          };
+
+          const getClosestIndex = () => {
+            let best = 0;
+            let bestDistance = Number.POSITIVE_INFINITY;
+            sections.forEach((section, index) => {
+              const distance = Math.abs(section.getBoundingClientRect().top);
+              if (distance < bestDistance) {
+                bestDistance = distance;
+                best = index;
+              }
+            });
+            return best;
+          };
+
+          const unlockAfterTransition = () => {
+            window.setTimeout(() => {
+              isLocked = false;
+              wheelProgress = 0;
+              activeIndex = getClosestIndex();
+            }, transitionMs + 60);
+          };
+
+          const jumpTo = (index) => {
+            const nextIndex = clamp(index, 0, maxIndex);
+            if (nextIndex === activeIndex) {
+              wheelProgress = 0;
+              return;
+            }
+            activeIndex = nextIndex;
+            isLocked = true;
+            sections[nextIndex].scrollIntoView({
+              behavior: prefersReducedMotion ? "auto" : "smooth",
+              block: "start",
+            });
+            unlockAfterTransition();
+          };
+
+          const moveBy = (delta) => {
+            if (isLocked) return;
+            jumpTo(getClosestIndex() + delta);
+          };
+
+          const onWheel = (event) => {
+            if (isEditableTarget(event.target)) return;
+            event.preventDefault();
+            if (isLocked) return;
+            wheelProgress += event.deltaY;
+            if (Math.abs(wheelProgress) < wheelThreshold) return;
+            const direction = wheelProgress > 0 ? 1 : -1;
+            wheelProgress = 0;
+            moveBy(direction);
+          };
+
+          const onTouchStart = (event) => {
+            if (event.touches.length !== 1 || isEditableTarget(event.target))
+              return;
+            touchStartY = event.touches[0].clientY;
+          };
+
+          const onTouchEnd = (event) => {
+            if (
+              touchStartY === null ||
+              isLocked ||
+              isEditableTarget(event.target)
+            ) {
+              touchStartY = null;
+              return;
+            }
+            const endY = event.changedTouches[0]?.clientY;
+            if (typeof endY !== "number") {
+              touchStartY = null;
+              return;
+            }
+            const deltaY = touchStartY - endY;
+            touchStartY = null;
+            if (Math.abs(deltaY) < touchThreshold) return;
+            moveBy(deltaY > 0 ? 1 : -1);
+          };
+
+          const onKeyDown = (event) => {
+            if (isEditableTarget(event.target) || isLocked) return;
+            const nextKeys = ["ArrowDown", "PageDown"];
+            const prevKeys = ["ArrowUp", "PageUp"];
+            if (
+              nextKeys.includes(event.key) ||
+              (event.key === " " && !event.shiftKey)
+            ) {
+              event.preventDefault();
+              moveBy(1);
+              return;
+            }
+            if (
+              prevKeys.includes(event.key) ||
+              (event.key === " " && event.shiftKey)
+            ) {
+              event.preventDefault();
+              moveBy(-1);
+            }
+          };
+
+          window.addEventListener("wheel", onWheel, { passive: false });
+          window.addEventListener("touchstart", onTouchStart, {
+            passive: true,
+          });
+          window.addEventListener("touchend", onTouchEnd, { passive: true });
+          window.addEventListener("keydown", onKeyDown);
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (!isLocked) activeIndex = getClosestIndex();
+            },
+            { passive: true }
+          );
+
+          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", (e) => {
+              const targetId = anchor.getAttribute("href")?.substring(1);
+              if (!targetId) return;
+              const targetSection = document.getElementById(targetId);
+              if (!targetSection) return;
+              const targetIndex = sections.indexOf(targetSection);
+              if (targetIndex !== -1) {
+                e.preventDefault();
+                jumpTo(targetIndex);
+              }
+            });
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

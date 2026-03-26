@@ -1,0 +1,35 @@
+---
+import ProjectExplorer from "../react/ProjectExplorer";
+import type { PortfolioContent } from "../../data/portfolio";
+
+interface Props {
+  content: PortfolioContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="section reveal" id="projects">
+  <div class="container" style="display:grid;gap:16px;width:100%;">
+    <div class="stagger-child">
+      <div class="kicker">{content.sectionLabels.projects}</div>
+      <h2 style="font-size:clamp(34px,6vw,58px);margin-top:8px;">
+        {content.projects.heading}
+      </h2>
+    </div>
+    <div class="stagger-child">
+      <ProjectExplorer
+        client:load
+        projects={content.projects.items}
+        labels={{
+          searchPlaceholder: content.ui.projectSearchPlaceholder,
+          searchAria: content.ui.projectSearchAria,
+          filterAria: content.ui.projectFilterAria,
+          allStacks: content.ui.allStacks,
+          impactLabel: content.ui.impactLabel,
+          noResults: content.ui.noProjectsFound,
+        }}
+      />
+    </div>
+  </div>
+</section>

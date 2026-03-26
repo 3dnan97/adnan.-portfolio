@@ -1,0 +1,41 @@
+---
+import ImpactMetricsPlayground from "../react/ImpactMetricsPlayground";
+import type { PortfolioContent } from "../../data/portfolio";
+
+interface Props {
+  content: PortfolioContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section id="about" class="section reveal" style="background:var(--bg-alt);">
+  <div
+    class="container"
+    style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:start;"
+  >
+    <div class="stagger-child">
+      <div class="kicker">{content.sectionLabels.about}</div>
+      <h2 style="font-size:clamp(34px,6vw,58px);margin-top:8px;">
+        {content.about.heading}
+      </h2>
+    </div>
+    <div style="display:grid;gap:14px;" class="stagger-child">
+      {
+        content.about.paragraphs.map((paragraph) => (
+          <p style="margin:0;color:var(--muted);font-size:clamp(15px,3.6vw,18px);font-weight:300;line-height:1.65;">
+            {paragraph}
+          </p>
+        ))
+      }
+      <ImpactMetricsPlayground
+        client:visible
+        metrics={content.about.metrics}
+        labels={{
+          baseline: content.ui.baselineLabel,
+          optimized: content.ui.optimizedLabel,
+        }}
+      />
+    </div>
+  </div>
+</section>

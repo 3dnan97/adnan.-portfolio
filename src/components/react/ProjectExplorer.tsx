@@ -8,6 +8,7 @@ type Project = {
   year: number;
   impact?: string;
   stacks: string[];
+  url?: string;
 };
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
     allStacks: string;
     impactLabel: string;
     noResults: string;
+    viewProject: string;
   };
 }
 
@@ -144,7 +146,32 @@ export default function ProjectExplorer({ projects, labels }: Props) {
                   lineHeight: 1.1,
                 }}
               >
-                {project.title}
+                {project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "inherit",
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      position: "relative",
+                      width: "fit-content"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#c4622d";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "inherit";
+                    }}
+                  >
+                    {project.title}
+                  </a>
+                ) : (
+                  project.title
+                )}
               </h3>
               <p style={{ marginTop: "8px", color: "#4a4540", fontSize: "15px", lineHeight: 1.55 }}>
                 {project.summary}
@@ -184,15 +211,72 @@ export default function ProjectExplorer({ projects, labels }: Props) {
             </div>
             <div
               style={{
-                fontSize: "11px",
-                color: "#8c8580",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
                 paddingTop: "4px",
-                whiteSpace: "nowrap",
+                paddingBottom: "4px",
               }}
             >
-              {project.year}
+              <span
+                style={{
+                  fontSize: "11px",
+                  color: "#8c8580",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {project.year}
+              </span>
+              
+              {project.url && (
+                <div style={{ marginTop: "16px" }}>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      background: "#1a1612",
+                      color: "#f5f0e8",
+                      textDecoration: "none",
+                      padding: "6px 14px",
+                      borderRadius: "100px",
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      transition: "transform 200ms ease, background 200ms ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#c4622d";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      const arrow = e.currentTarget.querySelector('.cta-arrow') as HTMLElement;
+                      if (arrow) arrow.style.transform = "translate(2px, -2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "#1a1612";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      const arrow = e.currentTarget.querySelector('.cta-arrow') as HTMLElement;
+                      if (arrow) arrow.style.transform = "translate(0, 0)";
+                    }}
+                  >
+                    {labels.viewProject}
+                    <span 
+                      className="cta-arrow" 
+                      style={{ 
+                        transition: "transform 200ms ease",
+                        display: "inline-block",
+                        fontFamily: "Inter, system-ui, sans-serif"
+                      }}
+                    >
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              )}
             </div>
           </motion.article>
         ))}

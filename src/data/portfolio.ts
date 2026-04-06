@@ -7,6 +7,7 @@ export type Project = {
   year: number;
   impact?: string;
   stacks: string[];
+  url?: string;
 };
 
 export type Metric = {
@@ -96,6 +97,7 @@ export type PortfolioContent = {
     contactFormRequiredError: string;
     contactFormEmailInvalidError: string;
     contactFormSuccess: string;
+    viewProjectLabel: string;
   };
 };
 
@@ -216,6 +218,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           year: 2026,
           impact: "Astro + TypeScript + Tailwind, shipped with static delivery and excellent performance",
           stacks: sharedStacks,
+          url: "https://asaspower.net",
         },
         {
           id: "data-explorer",
@@ -277,6 +280,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormRequiredError: "This field is required.",
       contactFormEmailInvalidError: "Please enter a valid email address.",
       contactFormSuccess: "Opening your email client...",
+      viewProjectLabel: "Visit Site",
     },
   },
   de: {
@@ -383,6 +387,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           year: 2026,
           impact: "Astro + TypeScript + Tailwind, statisch ausgeliefert mit starker Performance",
           stacks: sharedStacks,
+          url: "https://asaspower.net",
         },
         {
           id: "data-explorer",
@@ -444,6 +449,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormRequiredError: "Dieses Feld ist erforderlich.",
       contactFormEmailInvalidError: "Bitte gib eine gültige E-Mail-Adresse ein.",
       contactFormSuccess: "E-Mail-Programm wird geöffnet...",
+      viewProjectLabel: "Zur Website",
     },
   },
   ar: {
@@ -550,6 +556,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           year: 2026,
           impact: "Astro + TypeScript + Tailwind مع نشر ثابت وأداء قوي",
           stacks: sharedStacks,
+          url: "https://asaspower.net",
         },
         {
           id: "data-explorer",
@@ -611,6 +618,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormRequiredError: "هذا الحقل مطلوب.",
       contactFormEmailInvalidError: "يرجى إدخال بريد إلكتروني صالح.",
       contactFormSuccess: "جارٍ فتح برنامج البريد...",
+      viewProjectLabel: "زيارة الموقع",
     },
   },
 };

@@ -76,7 +76,6 @@ const { title, lang, dir } = Astro.props;
         color: var(--ink);
         line-height: 1.55;
         overflow-y: auto;
-        scroll-snap-type: y mandatory;
         overscroll-behavior-y: none;
       }
 
@@ -126,8 +125,6 @@ const { title, lang, dir } = Astro.props;
         padding: 72px 0;
         border-top: 1px solid var(--line);
         min-height: 100svh;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
         display: flex;
         align-items: center;
       }
@@ -288,13 +285,7 @@ const { title, lang, dir } = Astro.props;
       }
 
       @media (max-width: 900px) {
-        body {
-          scroll-snap-type: none;
-        }
-
         .section {
-          scroll-snap-align: none;
-          scroll-snap-stop: normal;
           min-height: auto;
         }
 
@@ -341,169 +332,40 @@ const { title, lang, dir } = Astro.props;
           nodes.forEach((node) => observer.observe(node));
         }
 
-        // ── Section scroll-jacking ──
-        const prefersReducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
-        const isTouchLike =
-          window.matchMedia("(pointer: coarse)").matches ||
-          window.innerWidth <= 900;
+        // ── 60% Snap-to-Top on Desktop ──
         const sections = Array.from(document.querySelectorAll(".section"));
+        let isSnapping = false; // Prevent infinite event loops during smooth scroll
 
-        if (sections.length > 1 && !isTouchLike) {
-          const maxIndex = sections.length - 1;
-          let activeIndex = 0;
-          let wheelProgress = 0;
-          let isLocked = false;
-          let touchStartY = null;
-
-          const transitionMs = prefersReducedMotion ? 0 : 620;
-          const wheelThreshold = 110;
-          const touchThreshold = 52;
-
-          const clamp = (value, min, max) =>
-            Math.min(max, Math.max(min, value));
-
-          const isEditableTarget = (target) => {
-            if (!(target instanceof HTMLElement)) return false;
-            const tag = target.tagName;
-            return (
-              target.isContentEditable ||
-              tag === "INPUT" ||
-              tag === "TEXTAREA" ||
-              tag === "SELECT" ||
-              !!target.closest(
-                "input, textarea, select, [contenteditable='true']"
-              )
-            );
-          };
-
-          const getClosestIndex = () => {
-            let best = 0;
-            let bestDistance = Number.POSITIVE_INFINITY;
-            sections.forEach((section, index) => {
-              const distance = Math.abs(section.getBoundingClientRect().top);
-              if (distance < bestDistance) {
-                bestDistance = distance;
-                best = index;
-              }
-            });
-            return best;
-          };
-
-          const unlockAfterTransition = () => {
-            window.setTimeout(() => {
-              isLocked = false;
-              wheelProgress = 0;
-              activeIndex = getClosestIndex();
-            }, transitionMs + 60);
-          };
-
-          const jumpTo = (index) => {
-            const nextIndex = clamp(index, 0, maxIndex);
-            if (nextIndex === activeIndex) {
-              wheelProgress = 0;
-              return;
-            }
-            activeIndex = nextIndex;
-            isLocked = true;
-            sections[nextIndex].scrollIntoView({
-              behavior: prefersReducedMotion ? "auto" : "smooth",
-              block: "start",
-            });
-            unlockAfterTransition();
-          };
-
-          const moveBy = (delta) => {
-            if (isLocked) return;
-            jumpTo(getClosestIndex() + delta);
-          };
-
-          const onWheel = (event) => {
-            if (isEditableTarget(event.target)) return;
-            event.preventDefault();
-            if (isLocked) return;
-            wheelProgress += event.deltaY;
-            if (Math.abs(wheelProgress) < wheelThreshold) return;
-            const direction = wheelProgress > 0 ? 1 : -1;
-            wheelProgress = 0;
-            moveBy(direction);
-          };
-
-          const onTouchStart = (event) => {
-            if (event.touches.length !== 1 || isEditableTarget(event.target))
-              return;
-            touchStartY = event.touches[0].clientY;
-          };
-
-          const onTouchEnd = (event) => {
-            if (
-              touchStartY === null ||
-              isLocked ||
-              isEditableTarget(event.target)
-            ) {
-              touchStartY = null;
-              return;
-            }
-            const endY = event.changedTouches[0]?.clientY;
-            if (typeof endY !== "number") {
-              touchStartY = null;
-              return;
-            }
-            const deltaY = touchStartY - endY;
-            touchStartY = null;
-            if (Math.abs(deltaY) < touchThreshold) return;
-            moveBy(deltaY > 0 ? 1 : -1);
-          };
-
-          const onKeyDown = (event) => {
-            if (isEditableTarget(event.target) || isLocked) return;
-            const nextKeys = ["ArrowDown", "PageDown"];
-            const prevKeys = ["ArrowUp", "PageUp"];
-            if (
-              nextKeys.includes(event.key) ||
-              (event.key === " " && !event.shiftKey)
-            ) {
-              event.preventDefault();
-              moveBy(1);
-              return;
-            }
-            if (
-              prevKeys.includes(event.key) ||
-              (event.key === " " && event.shiftKey)
-            ) {
-              event.preventDefault();
-              moveBy(-1);
-            }
-          };
-
-          window.addEventListener("wheel", onWheel, { passive: false });
-          window.addEventListener("touchstart", onTouchStart, {
-            passive: true,
-          });
-          window.addEventListener("touchend", onTouchEnd, { passive: true });
-          window.addEventListener("keydown", onKeyDown);
-          window.addEventListener(
-            "scroll",
-            () => {
-              if (!isLocked) activeIndex = getClosestIndex();
+        if (sections.length > 0) {
+          const sectionObserver = new IntersectionObserver(
+            (entries) => {
+              if (window.innerWidth < 900) return; // Only desktop
+              
+              entries.forEach((entry) => {
+                // If the section becomes highly visible (e.g., user scrolled 90% of it into view)
+                if (entry.isIntersecting && !isSnapping) {
+                  isSnapping = true;
+                  
+                  // Jump the start of this section to the start of the viewport
+                  entry.target.scrollIntoView({ 
+                    behavior: "smooth", 
+                    block: "start" 
+                  });
+                  
+                  // Release lock after the smooth scroll finishes (approx 800ms)
+                  setTimeout(() => {
+                    isSnapping = false;
+                  }, 800);
+                }
+              });
             },
-            { passive: true }
+            { 
+              // Trigger when 60% of the section comes into the viewport
+              threshold: 0.60
+            }
           );
-
-          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener("click", (e) => {
-              const targetId = anchor.getAttribute("href")?.substring(1);
-              if (!targetId) return;
-              const targetSection = document.getElementById(targetId);
-              if (!targetSection) return;
-              const targetIndex = sections.indexOf(targetSection);
-              if (targetIndex !== -1) {
-                e.preventDefault();
-                jumpTo(targetIndex);
-              }
-            });
-          });
+          
+          sections.forEach((s) => sectionObserver.observe(s));
         }
       }
     </script>

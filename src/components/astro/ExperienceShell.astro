@@ -47,13 +47,13 @@ const { content } = Astro.props;
     display: grid;
     gap: 0;
     position: relative;
-    padding-left: 28px;
+    padding-inline-start: 28px;
   }
 
   .timeline::before {
     content: "";
     position: absolute;
-    left: 7px;
+    inset-inline-start: -1px;
     top: 10px;
     bottom: 10px;
     width: 1px;
@@ -63,7 +63,8 @@ const { content } = Astro.props;
 
   .timeline-entry {
     position: relative;
-    padding: 20px 20px 20px 24px;
+    padding: 20px;
+    padding-inline-start: 24px;
     border: 1px solid #2e2a25;
     margin-bottom: 12px;
     display: grid;
@@ -84,8 +85,8 @@ const { content } = Astro.props;
 
   .timeline-dot {
     position: absolute;
-    left: -35px;
-    top: 22px;
+    inset-inline-start: -35px;
+    top: 5px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -119,7 +120,7 @@ const { content } = Astro.props;
 
   ul {
     margin: 4px 0 0 0;
-    padding-left: 18px;
+    padding-inline-start: 18px;
     display: grid;
     gap: 5px;
   }

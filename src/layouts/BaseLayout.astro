@@ -340,31 +340,35 @@ const { title, lang, dir } = Astro.props;
           const sectionObserver = new IntersectionObserver(
             (entries) => {
               if (window.innerWidth < 900) return; // Only desktop
-              
+
               entries.forEach((entry) => {
-                // If the section becomes highly visible (e.g., user scrolled 90% of it into view)
+                // If the section becomes highly visible and we're not already snapping
                 if (entry.isIntersecting && !isSnapping) {
                   isSnapping = true;
-                  
+
+                  // Temporarily disable scrolling to lock the view
+                  document.body.style.overflow = "hidden";
+
                   // Jump the start of this section to the start of the viewport
-                  entry.target.scrollIntoView({ 
-                    behavior: "smooth", 
-                    block: "start" 
+                  entry.target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
                   });
-                  
-                  // Release lock after the smooth scroll finishes (approx 800ms)
+
+                  // Release lock and re-enable scrolling after the animation
                   setTimeout(() => {
+                    document.body.style.overflow = "";
                     isSnapping = false;
-                  }, 800);
+                  }, 850);
                 }
               });
             },
-            { 
+            {
               // Trigger when 60% of the section comes into the viewport
-              threshold: 0.60
+              threshold: 0.6,
             }
           );
-          
+
           sections.forEach((s) => sectionObserver.observe(s));
         }
       }

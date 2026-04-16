@@ -247,7 +247,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Backend",
-          items: ["Python", "Node.js / Express", "Flask", "FastAPI", "REST APIs"],
+          items: ["Python", "Flask", "REST APIs"],
         },
         {
           title: "Data & Infra",
@@ -255,7 +255,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Tools & Other",
-          items: ["Git / GitHub", "Netlify", "Docker", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+          items: ["Git / GitHub", "Netlify", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+        },
+        {
+          title: "Additional Knowledge",
+          items: ["Node.js / Express", "FastAPI", "Docker"],
         },
       ],
     },
@@ -416,7 +420,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Backend",
-          items: ["Python", "Node.js / Express", "Flask", "FastAPI", "REST APIs"],
+          items: ["Python", "Flask", "REST APIs"],
         },
         {
           title: "Daten & Infrastruktur",
@@ -424,7 +428,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Tools & Weitere",
-          items: ["Git / GitHub", "Netlify", "Docker", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+          items: ["Git / GitHub", "Netlify", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+        },
+        {
+          title: "Zusätzliche Kenntnisse",
+          items: ["Node.js / Express", "FastAPI", "Docker"],
         },
       ],
     },
@@ -585,7 +593,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "الواجهة الخلفية",
-          items: ["Python", "Node.js / Express", "Flask", "FastAPI", "REST APIs"],
+          items: ["Python", "Flask", "REST APIs"],
         },
         {
           title: "البيانات والبنية التحتية",
@@ -593,7 +601,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "الأدوات وأخرى",
-          items: ["Git / GitHub", "Netlify", "Docker", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+          items: ["Git / GitHub", "Netlify", "Linux / Bash", "GenAI / LLMs", "Agile / Scrum"],
+        },
+        {
+          title: "معرفة إضافية",
+          items: ["Node.js / Express", "FastAPI", "Docker"],
         },
       ],
     },

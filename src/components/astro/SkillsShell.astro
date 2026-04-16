@@ -1,5 +1,6 @@
 ---
 import type { PortfolioContent } from "../../data/portfolio";
+import SkillIcon from "./SkillIcon.astro";
 
 interface Props {
   content: PortfolioContent;
@@ -26,7 +27,10 @@ const { content } = Astro.props;
             </div>
             <div class="chip-row">
               {category.items.map((item) => (
-                <span class="chip">{item}</span>
+                <span class="chip">
+                  <SkillIcon name={item} />
+                  {item}
+                </span>
               ))}
             </div>
           </article>
@@ -39,7 +43,7 @@ const { content } = Astro.props;
 <style>
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 12px;
     align-items: stretch;
   }

@@ -94,9 +94,11 @@ export type PortfolioContent = {
     contactFormEmailLabel: string;
     contactFormMessageLabel: string;
     contactFormSubmitLabel: string;
+    contactFormSending: string;
     contactFormRequiredError: string;
     contactFormEmailInvalidError: string;
     contactFormSuccess: string;
+    contactFormError: string;
     viewProjectLabel: string;
   };
 };
@@ -281,9 +283,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormEmailLabel: "Email",
       contactFormMessageLabel: "Message",
       contactFormSubmitLabel: "Send message",
+      contactFormSending: "Sending...",
       contactFormRequiredError: "This field is required.",
       contactFormEmailInvalidError: "Please enter a valid email address.",
-      contactFormSuccess: "Opening your email client...",
+      contactFormSuccess: "Message sent successfully.",
+      contactFormError: "Something went wrong. Please try again.",
       viewProjectLabel: "Visit Site",
     },
   },
@@ -454,9 +458,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormEmailLabel: "E-Mail",
       contactFormMessageLabel: "Nachricht",
       contactFormSubmitLabel: "Nachricht senden",
+      contactFormSending: "Wird gesendet...",
       contactFormRequiredError: "Dieses Feld ist erforderlich.",
       contactFormEmailInvalidError: "Bitte gib eine gültige E-Mail-Adresse ein.",
-      contactFormSuccess: "E-Mail-Programm wird geöffnet...",
+      contactFormSuccess: "Nachricht erfolgreich gesendet.",
+      contactFormError: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
       viewProjectLabel: "Zur Website",
     },
   },
@@ -627,9 +633,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contactFormEmailLabel: "البريد الإلكتروني",
       contactFormMessageLabel: "الرسالة",
       contactFormSubmitLabel: "إرسال الرسالة",
+      contactFormSending: "جارٍ الإرسال...",
       contactFormRequiredError: "هذا الحقل مطلوب.",
       contactFormEmailInvalidError: "يرجى إدخال بريد إلكتروني صالح.",
-      contactFormSuccess: "جارٍ فتح برنامج البريد...",
+      contactFormSuccess: "تم إرسال الرسالة بنجاح.",
+      contactFormError: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
       viewProjectLabel: "زيارة الموقع",
     },
   },

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { content } = Astro.props;
+const web3FormsAccessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 ---
 
 <section id="contact" class="section dark reveal" style="border-bottom:0;">
@@ -95,6 +96,7 @@ const { content } = Astro.props;
     <div class="stagger-child">
       <ContactForm
         client:visible
+        accessKey={web3FormsAccessKey}
         toEmail={content.identity.email}
         locale={content.locale}
         labels={{
@@ -102,9 +104,11 @@ const { content } = Astro.props;
           email: content.ui.contactFormEmailLabel,
           message: content.ui.contactFormMessageLabel,
           submit: content.ui.contactFormSubmitLabel,
+          sending: content.ui.contactFormSending,
           requiredError: content.ui.contactFormRequiredError,
           emailInvalidError: content.ui.contactFormEmailInvalidError,
           success: content.ui.contactFormSuccess,
+          error: content.ui.contactFormError,
         }}
       />
     </div>

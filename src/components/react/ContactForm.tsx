@@ -5,12 +5,15 @@ type Labels = {
   email: string;
   message: string;
   submit: string;
+  sending: string;
   requiredError: string;
   emailInvalidError: string;
   success: string;
+  error: string;
 };
 
 interface Props {
+  accessKey: string;
   toEmail: string;
   locale: "en" | "de" | "ar";
   labels: Labels;
@@ -24,12 +27,13 @@ type Errors = {
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function ContactForm({ toEmail, locale, labels }: Props) {
+export default function ContactForm({ accessKey, toEmail, locale, labels }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [botcheck, setBotcheck] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const isRtl = locale === "ar";
 
@@ -61,14 +65,57 @@ export default function ContactForm({ toEmail, locale, labels }: Props) {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("idle");
     if (!validate()) return;
-    const subject = encodeURIComponent(`Portfolio contact from ${name.trim()}`);
-    const body = encodeURIComponent(`${message.trim()}\n\nFrom: ${name.trim()}\nEmail: ${email.trim()}`);
-    window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
-    setStatus("success");
+
+    if (!accessKey.trim()) {
+      setStatus("error");
+      return;
+    }
+
+    if (botcheck.trim()) {
+      return;
+    }
+
+    setStatus("sending");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          subject: `Portfolio contact from ${name.trim()}`,
+          from_name: name.trim(),
+          replyto: email.trim(),
+          to: toEmail,
+          botcheck,
+        }),
+      });
+
+      const result = (await response.json()) as { success?: boolean };
+
+      if (!response.ok || !result.success) {
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setMessage("");
+      setErrors({});
+    } catch {
+      setStatus("error");
+    }
   };
 
   const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -80,6 +127,16 @@ export default function ContactForm({ toEmail, locale, labels }: Props) {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: "grid", gap: "18px", maxWidth: "780px", width: "100%", minWidth: 0 }} noValidate>
+      <input
+        type="checkbox"
+        name="botcheck"
+        style={{ display: "none" }}
+        tabIndex={-1}
+        autoComplete="off"
+        checked={Boolean(botcheck)}
+        onChange={(e) => setBotcheck(e.target.checked ? "1" : "")}
+      />
+
       <label style={{ display: "grid", gap: "6px" }}>
         <span style={{ color: "#5a5450", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           {labels.name}
@@ -131,6 +188,7 @@ export default function ContactForm({ toEmail, locale, labels }: Props) {
       <div style={{ display: "flex", justifyContent: isRtl ? "flex-start" : "flex-end" }}>
         <button
           type="submit"
+          disabled={status === "sending"}
           style={{
             border: "1px solid #f5f0e8",
             background: "transparent",
@@ -142,6 +200,7 @@ export default function ContactForm({ toEmail, locale, labels }: Props) {
             cursor: "pointer",
             fontFamily: "Inter, system-ui, sans-serif",
             transition: "background 200ms ease, color 200ms ease",
+            opacity: status === "sending" ? 0.65 : 1,
           }}
           onMouseEnter={(e) => {
             (e.target as HTMLButtonElement).style.background = "#f5f0e8";
@@ -152,12 +211,15 @@ export default function ContactForm({ toEmail, locale, labels }: Props) {
             (e.target as HTMLButtonElement).style.color = "#f5f0e8";
           }}
         >
-          {labels.submit}
+          {status === "sending" ? labels.sending : labels.submit}
         </button>
       </div>
 
       {status === "success" && (
         <p style={{ margin: 0, color: "#8c8580", fontSize: "13px" }}>{labels.success}</p>
+      )}
+      {status === "error" && (
+        <p style={{ margin: 0, color: "#c4622d", fontSize: "13px" }}>{labels.error}</p>
       )}
     </form>
   );

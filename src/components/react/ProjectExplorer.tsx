@@ -9,10 +9,12 @@ type Project = {
   impact?: string;
   stacks: string[];
   url?: string;
+  badge?: string;
 };
 
 interface Props {
   projects: Project[];
+  locale: string;
   labels: {
     searchPlaceholder: string;
     searchAria: string;
@@ -55,10 +57,20 @@ const selectStyle: React.CSSProperties = {
   outline: "none",
 };
 
-export default function ProjectExplorer({ projects, labels }: Props) {
+const navigationBtns : Record<string, { previous: string; next: string }> = {
+  en: { previous: "← Previous", next: "Next →" },
+  ar: { previous: "→ السابق", next: "التالي ←" },
+  de: { previous: "← Vorherige", next: "Nächste →" },
+};
+
+export default function ProjectExplorer({ projects, labels, locale }: Props) {
   const [query, setQuery] = useState("");
   const [activeStack, setActiveStack] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const PROJECTS_PER_PAGE = 3;
 
+  console.log(locale);
+  
   const stacks = useMemo(() => {
     const set = new Set<string>();
     projects.forEach((project) => project.stacks.forEach((stack) => set.add(stack)));
@@ -83,7 +95,10 @@ export default function ProjectExplorer({ projects, labels }: Props) {
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setCurrentPage(1);
+          }}
           placeholder={labels.searchPlaceholder}
           aria-label={labels.searchAria}
           style={inputStyle}
@@ -98,7 +113,10 @@ export default function ProjectExplorer({ projects, labels }: Props) {
         />
         <select
           value={activeStack}
-          onChange={(e) => setActiveStack(e.target.value)}
+          onChange={(e) => {
+            setActiveStack(e.target.value);
+            setCurrentPage(1);
+          }}
           aria-label={labels.filterAria}
           style={selectStyle}
           onFocus={(e) => {
@@ -119,7 +137,7 @@ export default function ProjectExplorer({ projects, labels }: Props) {
       </div>
 
       <AnimatePresence mode="popLayout" initial={false}>
-        {filtered.map((project) => (
+        {filtered.slice((currentPage - 1) * PROJECTS_PER_PAGE, currentPage * PROJECTS_PER_PAGE).map((project) => (
           <motion.article
             key={project.id}
             layout
@@ -277,6 +295,28 @@ export default function ProjectExplorer({ projects, labels }: Props) {
                   </a>
                 </div>
               )}
+
+              {!project.url && project.badge && (
+                <div style={{ marginTop: "16px" }}>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      padding: "6px 12px",
+                      borderRadius: "100px",
+                      border: "1px solid #e8e3dc",
+                      background: "#ede8df",
+                      color: "#4a4540",
+                      fontSize: "11px",
+                      letterSpacing: "0.02em",
+                      maxWidth: "220px",
+                      textAlign: "right",
+                    }}
+                  >
+                    {project.badge}
+                  </span>
+                </div>
+              )}
             </div>
           </motion.article>
         ))}
@@ -284,6 +324,50 @@ export default function ProjectExplorer({ projects, labels }: Props) {
 
       {filtered.length === 0 && (
         <p style={{ color: "#8c8580", margin: 0, fontStyle: "italic" }}>{labels.noResults}</p>
+      )}
+
+      {filtered.length > PROJECTS_PER_PAGE && (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "16px", borderTop: "1px solid #e8e3dc" }}>
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            style={{
+              padding: "6px 14px",
+              background: currentPage === 1 ? "transparent" : "#1a1612",
+              color: currentPage === 1 ? "#8c8580" : "#f5f0e8",
+              border: currentPage === 1 ? "1px solid #e8e3dc" : "1px solid transparent",
+              borderRadius: "4px",
+              cursor: currentPage === 1 ? "not-allowed" : "pointer",
+              fontSize: "13px",
+              fontFamily: "inherit",
+              transition: "all 0.2s"
+            }}
+          >
+            {navigationBtns[locale]?.previous}
+          </button>
+          
+          <span style={{ fontSize: "13px", color: "#4a4540", fontVariantNumeric: "tabular-nums" }}>
+            {currentPage} / {Math.ceil(filtered.length / PROJECTS_PER_PAGE)}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(Math.ceil(filtered.length / PROJECTS_PER_PAGE), p + 1))}
+            disabled={currentPage === Math.ceil(filtered.length / PROJECTS_PER_PAGE)}
+            style={{
+              padding: "6px 14px",
+              background: currentPage === Math.ceil(filtered.length / PROJECTS_PER_PAGE) ? "transparent" : "#1a1612",
+              color: currentPage === Math.ceil(filtered.length / PROJECTS_PER_PAGE) ? "#8c8580" : "#f5f0e8",
+              border: currentPage === Math.ceil(filtered.length / PROJECTS_PER_PAGE) ? "1px solid #e8e3dc" : "1px solid transparent",
+              borderRadius: "4px",
+              cursor: currentPage === Math.ceil(filtered.length / PROJECTS_PER_PAGE) ? "not-allowed" : "pointer",
+              fontSize: "13px",
+              fontFamily: "inherit",
+              transition: "all 0.2s"
+            }}
+          >
+            {navigationBtns[locale]?.next}
+          </button>
+        </div>
       )}
     </div>
   );

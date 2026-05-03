@@ -21,6 +21,7 @@ const { content } = Astro.props;
       <ProjectExplorer
         client:load
         projects={content.projects.items}
+        locale={content.locale}
         labels={{
           searchPlaceholder: content.ui.projectSearchPlaceholder,
           searchAria: content.ui.projectSearchAria,

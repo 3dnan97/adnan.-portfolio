@@ -8,6 +8,7 @@ export type Project = {
   impact?: string;
   stacks: string[];
   url?: string;
+  badge?: string;
 };
 
 export type Metric = {
@@ -132,8 +133,8 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       location: "Aachen, Germany",
     },
     hero: {
-      heading: "Building reliable web products, one careful component at a time.",
-      summary: "I build fast, accessible web experiences with a strong frontend focus — currently at FEV Europe GmbH in Aachen.",
+      heading: "Adnan Al-khlaki",
+      summary: "Junior full-stack developer based in Aachen, focused on frontend and building fast, accessible web apps.",
     },
     sectionLabels: {
       about: "02 — About",
@@ -143,11 +144,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contact: "06 — Contact",
     },
     about: {
-      heading: "Building for the web — one careful component at a time.",
+      heading: "Building usable, production-ready web applications.",
       paragraphs: [
-        "I’m a junior full-stack developer based in Aachen, frontend-leaning, with a focus on clean implementation and interfaces that feel effortless to use.",
-        "Alongside my role at FEV Europe GmbH, I’m completing a B.Sc. in Computer Science at FH Aachen and building production-oriented internal tooling.",
-        "My thesis explores GenAI observability and monitoring — how to track, evaluate, and explain LLM behavior in real-world systems.",
+        "I’m a junior full-stack developer based in Aachen, with a strong focus on frontend and building clean, usable interfaces.",
+        "I’m currently completing my bachelor thesis at FEV Europe GmbH while finishing my B.Sc. in Computer Science at FH Aachen.",
+        "My thesis focuses on GenAI observability — tracking, evaluating, and understanding LLM behavior in real-world systems.",
       ],
       metrics: [
         {
@@ -170,7 +171,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Bachelor Thesis: GenAI Observability & Monitoring",
           company: "FEV Europe GmbH",
-          period: "15 Jan 2026 – Present (contract until 14 Jun 2026)",
+          period: "15 Jan 2026 - Present (contract until 14 Jun 2026)",
           bullets: [
             "Research Focus: Investigating practical approaches to track, evaluate, and explain LLM pipeline behavior in production.",
             "Platform Evaluation: Assessing observability tooling such as Langfuse for tracing, latency, and feedback visibility.",
@@ -179,9 +180,9 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           ],
         },
         {
-          title: "Frontend Developer — Working Student (External at FEV)",
+          title: "Full-Stack Developer — Working Student (External at FEV)",
           company: "RWTH MMP (Employer of Record) · FEV Europe GmbH (Workplace)",
-          period: "15 Sep 2025 – 14 Jan 2026",
+          period: "15 Sep 2025 - 14 Jan 2026",
           bullets: [
             "Performance Engineering: Optimized a backend-heavy review pipeline, reducing analysis runtime from ~4.5 min to ~1 min by parallelizing independent AI/API calls.",
             "Feature Ownership: Integrated chat-based exploration features for AI-generated reports and analysis outputs.",
@@ -190,9 +191,9 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           ],
         },
         {
-          title: "Frontend Developer — Intern",
+          title: "Full-Stack Developer — Intern",
           company: "FEV Europe GmbH",
-          period: "14 Apr 2025 – 29 Aug 2025",
+          period: "14 Apr 2025 - 29 Aug 2025",
           bullets: [
             "Full-Stack Development: Built an end-to-end internal finder tool with map visualizations, advanced filtering, and skeleton loaders.",
             "Latency Optimization: Reduced perceived pagination latency from ~1.5s to nearly 0ms using caching and prefetching strategies.",
@@ -202,12 +203,6 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
             "Team Enablement: Supported onboarding of new team members into internal tools and workflows.",
           ],
         },
-        {
-          title: "B.Sc. Computer Science",
-          company: "FH Aachen",
-          period: "Sep 2020 – Present",
-          bullets: [],
-        },
       ],
     },
     projects: {
@@ -215,28 +210,47 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       items: [
         {
           id: "solar-site",
-          title: "Bilingual Corporate Website",
-          summary: "EN/AR corporate site with full RTL/LTR support and a scalable i18n content architecture.",
+          title: "Asas Power for renewable energy - Corporate Website",
+          summary: "A bilingual website that introduces ASAS Power's solar solutions to both Arabic and international markets—with products, partners, and a seamless contact experience in both languages.",
           year: 2026,
-          impact: "Astro + TypeScript + Tailwind, shipped with static delivery and excellent performance",
+          impact: "SEO-ready and lightning-fast—99/100 performance and 91/100 SEO score deliver instant discoverability in both languages",
           stacks: sharedStacks,
           url: "https://asaspower.net",
         },
         {
+          id: "coffee-site",
+          title: "Yafa Golden Coffee - Corporate Landing Page",
+          summary: "Landing page that brings Yafa's story to life for both Arabic and English speakers, with zero content duplication.",
+          year: 2026,
+          impact: "Bilingual presence without the typical overhead - one edit updates all language versions instantly",
+          stacks: sharedStacks,
+          url: "https://ygcoffee.netlify.app",
+        },
+        {
+          id: "react-prototype",
+          title: "GenAIHub Prototype",
+          summary: "React + Vite prototype of an internal homepage to evaluate migrating from static HTML/vanilla JS to reusable components and routing.",
+          year: 2025,
+          impact: "De-risked the migration decision by proving a maintainable component + routing structure (layouts, breadcrumbs) for faster iteration",
+          stacks: ["React", "TypeScript", "SCSS", "Bootstrap", "Framer Motion", "React Toastify"],
+          badge: "Internal · FEV Europe GmbH",
+        },
+        {
           id: "data-explorer",
           title: "Internal Data Explorer",
-          summary: "Data visualization tool for internal workflows, combining maps, filters, and table-heavy interfaces.",
+          summary: "Tool that makes large datasets browsable through maps, filters, and tables—turning hidden data into quick insights.",
           year: 2025,
-          impact: "Reduced load time from ~50s to under 1s for pagination-heavy flows",
+          impact: "Reduced analysis time from 50+ seconds to under 1 second—teams now explore datasets 50× faster",
           stacks: ["JavaScript", "Bootstrap", "Flask", "Cosmos DB"],
+          badge: "Internal · FEV Europe GmbH",
         },
         {
           id: "portfolio-site",
           title: "This Portfolio",
-          summary: "A fast, editorial-style personal website focused on clarity, motion, and bilingual readiness.",
+          summary: "A multi-language portfolio built with Astro and React that uses a single TypeScript file to manage all content, making it easy to update and maintain.",
           year: 2026,
-          impact: "Structured content model and reusable sections for quick iteration",
-          stacks: ["Astro", "TypeScript", "Tailwind", "Netlify"],
+          impact: "Reusable content structure with central content management enabling instant, error-free updates across all languages",
+          stacks: ["Astro", "TypeScript", "Tailwind", "React", "Netlify"],
         },
       ],
     },
@@ -249,7 +263,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Backend",
-          items: ["Python", "Flask", "REST APIs"],
+          items: ["Python", "Flask", "Java","REST APIs"],
         },
         {
           title: "Data & Infra",
@@ -261,7 +275,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Additional Knowledge",
-          items: ["Node.js / Express", "FastAPI", "Docker"],
+          items: ["Node.js / Express", "Docker"],
         },
       ],
     },
@@ -307,8 +321,8 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       location: "Aachen, Deutschland",
     },
     hero: {
-      heading: "Ich baue zuverlässige Webprodukte – sorgfältig, Komponente für Komponente.",
-      summary: "Ich entwickle schnelle, barrierearme Web-Erlebnisse mit starkem Frontend-Fokus – aktuell bei FEV Europe GmbH in Aachen.",
+      heading: "Adnan Al-khlaki",
+      summary: "Junior Full-Stack-Entwickler mit Frontend-Fokus in Aachen, spezialisiert auf schnelle und zugängliche Webanwendungen.",
     },
     sectionLabels: {
       about: "02 — Über mich",
@@ -318,11 +332,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contact: "06 — Kontakt",
     },
     about: {
-      heading: "Webentwicklung – sorgfältig, Komponente für Komponente.",
+      heading: "Usable, production-ready Webanwendungen bauen.",
       paragraphs: [
-        "Ich bin ein junior Full-Stack-Entwickler in Aachen mit Frontend-Fokus und einem klaren Anspruch an saubere Umsetzung und verständliche Interfaces.",
-        "Parallel zu meiner Rolle bei FEV Europe GmbH schließe ich meinen B.Sc. in Informatik an der FH Aachen ab und arbeite an produktionsnahen internen Tools.",
-        "In meiner Bachelorarbeit befasse ich mich mit GenAI-Observability und Monitoring – also damit, wie man LLM-Verhalten in realen Systemen nachvollziehbar misst und bewertet.",
+        "Ich bin ein Junior Full-Stack-Entwickler mit starkem Fokus auf Frontend und der Leidenschaft, saubere, benutzerfreundliche Interfaces zu bauen.",
+        "Derzeit schreibe ich meine Bachelorarbeit bei FEV Europe GmbH, während ich meinen B.Sc. in Informatik an der FH Aachen abschließe.",
+        "In meiner Arbeit konzentriere ich mich auf GenAI Observability — das Tracking, Bewerten und Verstehen des Verhaltens von LLMs in realen Systemen.",
       ],
       metrics: [
         {
@@ -345,7 +359,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Bachelorarbeit: GenAI Observability & Monitoring",
           company: "FEV Europe GmbH",
-          period: "15.01.2026 – Heute (Vertrag bis 14.06.2026)",
+          period: "15.01.2026 - Heute (Vertrag bis 14.06.2026)",
           bullets: [
             "Forschungsschwerpunkt: Praktische Ansätze untersucht, um LLM-Pipelines in Produktion nachvollziehbar zu messen, zu bewerten und erklärbar zu machen.",
             "Plattform-Evaluierung: Observability-Werkzeuge wie Langfuse für Tracing, Latenz und Feedback-Transparenz bewertet.",
@@ -356,7 +370,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Frontend Developer — Werkstudent (extern bei FEV)",
           company: "RWTH MMP (Arbeitgeber) · FEV Europe GmbH (Einsatzort)",
-          period: "15.09.2025 – 14.01.2026",
+          period: "15.09.2025 - 14.01.2026",
           bullets: [
             "Performance Engineering: Eine backend-lastige interne Review-Pipeline optimiert und die Analyselaufzeit durch Parallelisierung unabhängiger AI/API-Aufrufe von ~4,5 Minuten auf ~1 Minute reduziert.",
             "Feature Ownership: Chatbasierte Explorationsfunktionen für AI-generierte Reports und Analyseergebnisse integriert.",
@@ -367,7 +381,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Frontend Developer — Praktikum",
           company: "FEV Europe GmbH",
-          period: "14.04.2025 – 29.08.2025",
+          period: "14.04.2025 - 29.08.2025",
           bullets: [
             "Full-Stack Development: Ein internes Finder-Tool end-to-end (Frontend + Backend) mit Kartenvisualisierung, erweitertem Filtering und Skeleton Loadern umgesetzt.",
             "Latency Optimization: Die wahrgenommene Pagination-Latenz durch Caching und Prefetching von ~1,5s auf nahezu 0ms reduziert.",
@@ -377,12 +391,6 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
             "Team Enablement: Onboarding neuer Teammitglieder in interne Tools und Workflows unterstützt.",
           ],
         },
-        {
-          title: "B.Sc. Informatik",
-          company: "FH Aachen",
-          period: "Sep 2020 – Heute",
-          bullets: [],
-        },
       ],
     },
     projects: {
@@ -390,12 +398,30 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       items: [
         {
           id: "solar-site",
-          title: "Zweisprachige Unternehmenswebsite",
-          summary: "EN/AR-Unternehmenswebsite mit vollständiger RTL/LTR-Unterstützung und skalierbarer i18n-Content-Struktur.",
+          title: "Asas Power für erneuerbare Energien - Unternehmenswebsite",
+          summary: "Eine zweisprachige Website, die Asas Powers Solarlösungen für arabische und internationale Märkte vorstellt - mit Produkten, Partnern und nahtloser Kontakterfahrung in beiden Sprachen.",
           year: 2026,
-          impact: "Astro + TypeScript + Tailwind, statisch ausgeliefert mit starker Performance",
+          impact: "SEO-optimiert und blitzschnell - 99/100 Performance und 91/100 SEO Score für sofortige Auffindbarkeit in beiden Sprachen",
           stacks: sharedStacks,
           url: "https://asaspower.net",
+        },
+        {
+          id: "coffee-site",
+          title: "Yafa Golden Coffee - Corporate Landing Page",
+          summary: "Landing Page, die Yafas Geschichte für arabische und englische Sprachräume zum Leben erweckt - ohne Content-Duplikation.",
+          year: 2026,
+          impact: "Zweisprachige Präsenz ohne zusätzlichen Overhead - eine Änderung aktualisiert alle Sprachversionen sofort",
+          stacks: sharedStacks,
+          url: "https://ygcoffee.netlify.app",
+        },
+        {
+          id: "react-prototype",
+          title: "GenAIHub-Prototyp",
+          summary: "React + Vite Prototyp einer internen Homepage zur Evaluierung der Migration von statischem HTML/Vanilla JS zu wiederverwendbaren Komponenten und Routing.",
+          year: 2025,
+          impact: "Migrationsentscheidung abgesichert durch Beweis einer wartbaren Komponenten- und Routing-Struktur (Layouts, Breadcrumbs) für schnellere Iteration",
+          stacks: ["React", "TypeScript", "SCSS", "Bootstrap", "Framer Motion", "React Toastify"],
+          badge: "Intern · FEV Europe GmbH",
         },
         {
           id: "data-explorer",
@@ -404,14 +430,15 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           year: 2025,
           impact: "Ladezeit in pagination-lastigen Abläufen von ~50s auf unter 1s reduziert",
           stacks: ["JavaScript", "Bootstrap", "Flask", "Cosmos DB"],
+          badge: "Intern · FEV Europe GmbH",
         },
         {
           id: "portfolio-site",
           title: "Dieses Portfolio",
-          summary: "Schnelle, editorial geprägte persönliche Website mit Fokus auf Klarheit, Motion und zweisprachiger Erweiterbarkeit.",
+          summary: "Ein mehrsprachiges Portfolio, das mit Astro und React erstellt wurde und alle Inhalte über eine einzige TypeScript-Datei verwaltet, wodurch es einfach zu aktualisieren und zu pflegen ist.",
           year: 2026,
-          impact: "Strukturiertes Content-Modell und wiederverwendbare Sektionen für schnelle Iteration",
-          stacks: ["Astro", "TypeScript", "Tailwind", "Netlify"],
+          impact: "Wiederverwendbare Inhaltsstruktur mit zentraler Inhaltsverwaltung, die sofortige und fehlerfreie Aktualisierungen in allen Sprachen ermöglicht",
+          stacks: ["Astro", "TypeScript", "Tailwind", "React", "Netlify"],
         },
       ],
     },
@@ -424,7 +451,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Backend",
-          items: ["Python", "Flask", "REST APIs"],
+          items: ["Python", "Flask", "Java", "REST APIs"],
         },
         {
           title: "Daten & Infrastruktur",
@@ -436,7 +463,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Zusätzliche Kenntnisse",
-          items: ["Node.js / Express", "FastAPI", "Docker"],
+          items: ["Node.js / Express", "Docker"],
         },
       ],
     },
@@ -482,8 +509,8 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       location: "آخن، ألمانيا",
     },
     hero: {
-      heading: "أبني منتجات ويب موثوقة، بعناية من أول مكوّن إلى آخره.",
-      summary: "أطوّر تجارب ويب سريعة وسهلة الاستخدام بتركيز قوي على الواجهة الأمامية — حاليًا في FEV Europe GmbH في آخن.",
+      heading: "عدنان الخلاقي",
+      summary: "مطوّر Full-Stack في آخن بتركيز على الواجهة الأمامية، وأهتم بالتنفيذ النظيف والواجهات الواضحة.",
     },
     sectionLabels: {
       about: "02 — نبذة",
@@ -493,11 +520,11 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contact: "06 — تواصل",
     },
     about: {
-      heading: "تطوير ويب بعناية، مكوّنًا بعد مكوّن.",
+      heading: "بناء تطبيقات ويب قابلة للاستخدام وجاهزة للإنتاج.",
       paragraphs: [
-        "أنا مطوّر Full-Stack مبتدئ في آخن بتركيز على الواجهة الأمامية، وأهتم بالتنفيذ النظيف والواجهات الواضحة.",
-        "إلى جانب عملي في FEV Europe GmbH، أستكمل بكالوريوس علوم الحاسوب في FH Aachen وأعمل على أدوات داخلية قريبة من بيئات الإنتاج.",
-        "في رسالة البكالوريوس أركز على GenAI Observability & Monitoring: كيف نقيس سلوك نماذج اللغة الكبيرة في الأنظمة الحقيقية ونقيّمه بشكل واضح.",
+        "أنا مطوّر Full-Stack في آخن، أركز بشكل كبير على الواجهة الأمامية ولدي شغف لبناء واجهات نظيفة وسهلة الاستخدام.",
+        "أنا حالياً أكتب رسالة البكالوريوس في شركة FEV Europe GmbH بينما أكمل درجة البكالوريوس في علوم الحاسوب في FH Aachen.",
+        "تركز رسالتي على مراقبة GenAI - تتبع، تقييم، وفهم سلوك LLM في أنظمة العالم الحقيقي.",
       ],
       metrics: [
         {
@@ -520,7 +547,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "رسالة البكالوريوس: مراقبة وتتبع GenAI",
           company: "FEV Europe GmbH",
-          period: "15 يناير 2026 – الآن (العقد حتى 14 يونيو 2026)",
+          period: "15 يناير 2026 - الآن (العقد حتى 14 يونيو 2026)",
           bullets: [
             "محور البحث: دراسة أساليب عملية لتتبّع سلوك مسارات LLM في الإنتاج وقياسه وشرحه بشكل واضح.",
             "تقييم المنصات: تقييم أدوات المراقبة مثل Langfuse لتحسين تتبع التنفيذ ورؤية الكمون والتغذية الراجعة.",
@@ -531,7 +558,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "مطوّر واجهات أمامية — عمل طالب (خارجي لدى FEV)",
           company: "RWTH MMP (صاحب العقد) · FEV Europe GmbH (مكان العمل)",
-          period: "15 سبتمبر 2025 – 14 يناير 2026",
+          period: "15 سبتمبر 2025 - 14 يناير 2026",
           bullets: [
             "هندسة الأداء: تحسين مسار مراجعة داخلي كثيف على مستوى الـBackend وتقليص زمن التحليل من ~4.5 دقائق إلى ~1 دقيقة عبر موازاة الاستدعاءات المستقلة لـ AI/API.",
             "ملكية الميزة: دمج ميزات الاستكشاف عبر المحادثة للتقارير الناتجة بالذكاء الاصطناعي ومخرجات التحليل.",
@@ -542,7 +569,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "مطوّر واجهات أمامية — تدريب",
           company: "FEV Europe GmbH",
-          period: "14 أبريل 2025 – 29 أغسطس 2025",
+          period: "14 أبريل 2025 - 29 أغسطس 2025",
           bullets: [
             "تطوير Full-Stack: بناء أداة Finder داخلية بشكل متكامل (Frontend + Backend) مع خرائط، فلاتر متقدمة، وSkeleton Loaders.",
             "تحسين الكمون: خفض الكمون المحسوس في pagination من ~1.5 ثانية إلى ما يقارب 0ms عبر caching وprefetching.",
@@ -552,12 +579,6 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
             "تمكين الفريق: دعم إدماج أعضاء جدد ضمن الأدوات الداخلية ومسارات العمل.",
           ],
         },
-        {
-          title: "بكالوريوس علوم الحاسوب",
-          company: "FH Aachen",
-          period: "سبتمبر 2020 – الآن",
-          bullets: [],
-        },
       ],
     },
     projects: {
@@ -565,12 +586,30 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       items: [
         {
           id: "solar-site",
-          title: "موقع شركة ثنائي اللغة",
-          summary: "موقع شركة EN/AR مع دعم كامل RTL/LTR وبنية محتوى قابلة للتوسع.",
+          title: "أساس باور للطاقة المتجددة - موقع الشركة",
+          summary: "موقع ثنائي اللغة يقدم حلول أساس باور الشمسية للأسواق العربية والعالمية - مع المنتجات والشركاء وتجربة اتصال سلسة بكلا اللغتين.",
           year: 2026,
-          impact: "Astro + TypeScript + Tailwind مع نشر ثابت وأداء قوي",
+          impact: "جاهز لمحركات البحث وسريع البرق - درجة أداء 99/100 ودرجة SEO 91/100 توفران قابلية اكتشاف فورية بكلا اللغتين",
           stacks: sharedStacks,
           url: "https://asaspower.net",
+        },
+        {
+          id: "coffee-site",
+          title: "يافع جولدن كوفي - صفحة هبوط الشركة",
+          summary: "صفحة هبوط تحيي قصة مقهى يافع لمتحدثي اللغة العربية والإنجليزية، بشخصية مميزة.",
+          year: 2026,
+          impact: "حضور ثنائي اللغة بدون الإجراءات الإدارية المعتادة - تحديث واحد يحدّث جميع الإصدارات اللغوية على الفور",
+          stacks: sharedStacks,
+          url: "https://ygcoffee.netlify.app",
+        },
+        {
+          id: "react-prototype",
+          title: "نموذج GenAIHub الأولي",
+          summary: "نموذج أولي React + Vite لواجهة داخلية لتقييم الانتقال من HTML/JavaScript الثابت إلى مكونات قابلة لإعادة الاستخدام والتوجيه.",
+          year: 2025,
+          impact: "قلّل درجة مخاطر قرار الانتقال بإثبات بنية مكونات وتوجيه قابلة للصيانة (تخطيطات وبطاقات أسفل) لتسريع التكرار",
+          stacks: ["React", "TypeScript", "SCSS", "Bootstrap", "Framer Motion", "React Toastify"],
+          badge: "داخلي · FEV Europe GmbH",
         },
         {
           id: "data-explorer",
@@ -579,14 +618,15 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           year: 2025,
           impact: "خفض زمن التحميل من ~50 ثانية إلى أقل من ثانية في التدفقات المعتمدة على pagination",
           stacks: ["JavaScript", "Bootstrap", "Flask", "Cosmos DB"],
+          badge: "داخلي · FEV Europe GmbH",
         },
         {
           id: "portfolio-site",
           title: "هذا المعرض",
-          summary: "موقع شخصي سريع بطابع تحريري، يركز على الوضوح والحركة وقابلية التوسع ثنائي اللغة.",
+          summary: "موقع شخصي يعرض العمل والصوت بوضوح، مصمم ليشعر بالحياة من خلال الحركة والمقياس - جاهز لأي لغة.",
           year: 2026,
-          impact: "نموذج محتوى منظم وأقسام قابلة لإعادة الاستخدام لتسريع التطوير",
-          stacks: ["Astro", "TypeScript", "Tailwind", "Netlify"],
+          impact: "بنية محتوى قابلة لإعادة الاستخدام تدعم لغات متعددة من اليوم الأول بدون إعادة تصميم",
+          stacks: ["Astro", "TypeScript", "Tailwind", "React", "Netlify"],
         },
       ],
     },
@@ -599,7 +639,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "الواجهة الخلفية",
-          items: ["Python", "Flask", "REST APIs"],
+          items: ["Python", "Flask", "Java", "REST APIs"],
         },
         {
           title: "البيانات والبنية التحتية",
@@ -611,7 +651,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "معرفة إضافية",
-          items: ["Node.js / Express", "FastAPI", "Docker"],
+          items: ["Node.js / Express", "Docker"],
         },
       ],
     },

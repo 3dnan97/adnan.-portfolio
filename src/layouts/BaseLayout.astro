@@ -51,7 +51,7 @@ const { title, lang, dir } = Astro.props;
         height: 100%;
         width: 100%;
         max-width: 100%;
-        overflow-x: hidden;
+        overflow: hidden;
       }
 
       /* Custom scrollbar */
@@ -75,7 +75,6 @@ const { title, lang, dir } = Astro.props;
         background: var(--bg);
         color: var(--ink);
         line-height: 1.55;
-        overflow-y: auto;
         overscroll-behavior-y: none;
       }
 
@@ -127,6 +126,7 @@ const { title, lang, dir } = Astro.props;
         min-height: 100svh;
         display: flex;
         align-items: center;
+        scroll-snap-align: start;
       }
 
       /* ── Reveal animation ── */
@@ -293,23 +293,38 @@ const { title, lang, dir } = Astro.props;
           padding-inline: 12px;
         }
       }
+
+      #snap-container {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-snap-type: y proximity;
+        scroll-behavior: smooth;
+      }
     </style>
   </head>
   <body>
     <div id="scroll-progress"></div>
-    <slot />
+    <main id="snap-container">
+      <slot />
+    </main>
     <script>
       if (typeof window !== "undefined") {
-        // ── Scroll progress bar ──
+        const snapContainer = document.getElementById("snap-container");
+
+        // Scroll progress bar
         const progressBar = document.getElementById("scroll-progress");
         const updateProgress = () => {
-          const scrollTop = window.scrollY;
+          if (!snapContainer) return;
+          const scrollTop = snapContainer.scrollTop;
           const docHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
+            snapContainer.scrollHeight - snapContainer.clientHeight;
           const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
           if (progressBar) progressBar.style.width = `${pct}%`;
         };
-        window.addEventListener("scroll", updateProgress, { passive: true });
+        if (snapContainer) {
+          snapContainer.addEventListener("scroll", updateProgress, { passive: true });
+        }
         updateProgress();
 
         // ── Reveal on scroll ──
@@ -327,49 +342,9 @@ const { title, lang, dir } = Astro.props;
                 }
               });
             },
-            { threshold: 0.08, rootMargin: "0px 0px -4% 0px" }
+            { root: snapContainer, threshold: 0.08, rootMargin: "0px 0px -4% 0px" }
           );
           nodes.forEach((node) => observer.observe(node));
-        }
-
-        // ── 60% Snap-to-Top on Desktop ──
-        const sections = Array.from(document.querySelectorAll(".section"));
-        let isSnapping = false; // Prevent infinite event loops during smooth scroll
-
-        if (sections.length > 0) {
-          const sectionObserver = new IntersectionObserver(
-            (entries) => {
-              if (window.innerWidth < 900) return; // Only desktop
-
-              entries.forEach((entry) => {
-                // If the section becomes highly visible and we're not already snapping
-                if (entry.isIntersecting && !isSnapping) {
-                  isSnapping = true;
-
-                  // Temporarily disable scrolling to lock the view
-                  document.body.style.overflow = "hidden";
-
-                  // Jump the start of this section to the start of the viewport
-                  entry.target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-
-                  // Release lock and re-enable scrolling after the animation
-                  setTimeout(() => {
-                    document.body.style.overflow = "";
-                    isSnapping = false;
-                  }, 850);
-                }
-              });
-            },
-            {
-              // Trigger when 60% of the section comes into the viewport
-              threshold: 0.6,
-            }
-          );
-
-          sections.forEach((s) => sectionObserver.observe(s));
         }
       }
     </script>

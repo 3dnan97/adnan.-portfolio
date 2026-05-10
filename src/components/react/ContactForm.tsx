@@ -138,7 +138,7 @@ export default function ContactForm({ accessKey, toEmail, locale, labels }: Prop
       />
 
       <label style={{ display: "grid", gap: "6px" }}>
-        <span style={{ color: "#5a5450", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+        <span style={{ color: "#999089", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           {labels.name}
         </span>
         <input
@@ -154,7 +154,7 @@ export default function ContactForm({ accessKey, toEmail, locale, labels }: Prop
       {errors.name && <p style={{ margin: "-12px 0 0", color: "#c4622d", fontSize: "12px" }}>{errors.name}</p>}
 
       <label style={{ display: "grid", gap: "6px" }}>
-        <span style={{ color: "#5a5450", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+        <span style={{ color: "#999089", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           {labels.email}
         </span>
         <input
@@ -170,7 +170,7 @@ export default function ContactForm({ accessKey, toEmail, locale, labels }: Prop
       {errors.email && <p style={{ margin: "-12px 0 0", color: "#c4622d", fontSize: "12px" }}>{errors.email}</p>}
 
       <label style={{ display: "grid", gap: "6px" }}>
-        <span style={{ color: "#5a5450", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+        <span style={{ color: "#999089", fontSize: "10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           {labels.message}
         </span>
         <textarea

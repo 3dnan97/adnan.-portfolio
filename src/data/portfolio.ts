@@ -38,6 +38,7 @@ export type PortfolioContent = {
     about: string;
     experience: string;
     projects: string;
+    skills: string;
     contact: string;
   };
   identity: {
@@ -125,6 +126,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       about: "About",
       experience: "Work",
       projects: "Projects",
+      skills: "Skills",
       contact: "Contact",
     },
     identity: {
@@ -134,7 +136,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
     },
     hero: {
       heading: "Adnan Al-khlaki",
-      summary: "Junior full-stack developer based in Aachen, focused on frontend and building fast, accessible web apps.",
+      summary: "Junior full-stack developer based in Aachen, focused on frontend - building fast, accessible web apps backed by real performance improvements.",
     },
     sectionLabels: {
       about: "02 — About",
@@ -146,22 +148,22 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
     about: {
       heading: "Building usable, production-ready web applications.",
       paragraphs: [
-        "I’m a junior full-stack developer based in Aachen, with a strong focus on frontend and building clean, usable interfaces.",
-        "I’m currently completing my bachelor thesis at FEV Europe GmbH while finishing my B.Sc. in Computer Science at FH Aachen.",
-        "My thesis focuses on GenAI observability — tracking, evaluating, and understanding LLM behavior in real-world systems.",
+        "I'm a junior full-stack developer based in Aachen - frontend is where I spend most of my time, but I'm comfortable going deep into the backend when the problem calls for it.",
+        "I'm currently completing my bachelor thesis at FEV Europe GmbH while finishing my B.Sc. in Computer Science at FH Aachen.",
+        "My thesis is on GenAI observability - figuring out how to make LLM behavior in real systems visible, measurable, and actually useful to act on.",
       ],
       metrics: [
         {
           id: "load",
-          before: "50s",
-          after: "<1s",
-          description: "Production cold-start and loading time reduced through frontend optimization",
+          before: "5s - 9s",
+          after: "~1.5s",
+          description: "Production cold - start and loading time reduced through server-side optimization",
         },
         {
           id: "transition-delay",
           before: "~1.5s",
-          after: "0ms",
-          description: "Perceived page transition delay removed via aggressive prefetching",
+          after: "<0.2s",
+          description: "Pagination latency - prefetching in the background and caching up to 10 pages made navigation feel instant",
         },
       ],
     },
@@ -171,36 +173,37 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Bachelor Thesis: GenAI Observability & Monitoring",
           company: "FEV Europe GmbH",
-          period: "15 Jan 2026 - Present (contract until 14 Jun 2026)",
+          period: "Jan 2026 - Present (Planned Jun 2026)",
           bullets: [
-            "Research Focus: Investigating practical approaches to track, evaluate, and explain LLM pipeline behavior in production.",
-            "Platform Evaluation: Assessing observability tooling such as Langfuse for tracing, latency, and feedback visibility.",
-            "Implementation: Building a telemetry SDK prototype and integrating it into internal workflows.",
-            "Data Architecture: Designing a unified telemetry model for usage, latency, and feedback signals.",
+            "Investigated practical approaches to track, evaluate, and explain LLM pipeline behavior in production.",
+            "Assessed observability tooling such as Langfuse for tracing, latency, and feedback visibility.",
+            "Built a telemetry SDK prototype and integrating it into internal workflows.",
+            "Designed a unified telemetry model for usage, latency, and feedback signals.",
           ],
         },
         {
           title: "Full-Stack Developer — Working Student (External at FEV)",
           company: "RWTH MMP (Employer of Record) · FEV Europe GmbH (Workplace)",
-          period: "15 Sep 2025 - 14 Jan 2026",
+          period: "Sep 2025 - Jan 2026",
           bullets: [
-            "Performance Engineering: Optimized a backend-heavy review pipeline, reducing analysis runtime from ~4.5 min to ~1 min by parallelizing independent AI/API calls.",
-            "Feature Ownership: Integrated chat-based exploration features for AI-generated reports and analysis outputs.",
-            "Cross-Tool Impact: Maintained and refined responsive UI components (complex steppers and proprietary workflows) across 10+ internal tools in total across internship + working-student periods.",
-            "Backend Quality: Refactored Flask components and improved API interaction performance for analysis pipelines.",
+            "Optimized a backend-heavy review pipeline, reducing analysis runtime from ~4.5 min to ~1 min by parallelizing independent AI/API calls.",
+            "Integrated chat-based exploration features for AI-generated reports and analysis outputs.",
+            "Maintained and refined responsive UI components (complex steppers and proprietary workflows) across 10+ internal tools in total across internship + working-student periods.",
+            "Reviewed code, refactored Flask components and improved API interaction performance for analysis pipelines.",
           ],
         },
         {
           title: "Full-Stack Developer — Intern",
           company: "FEV Europe GmbH",
-          period: "14 Apr 2025 - 29 Aug 2025",
+          period: "Apr 2025 - Aug 2025",
           bullets: [
-            "Full-Stack Development: Built an end-to-end internal finder tool with map visualizations, advanced filtering, and skeleton loaders.",
-            "Latency Optimization: Reduced perceived pagination latency from ~1.5s to nearly 0ms using caching and prefetching strategies.",
-            "Real-Time Systems: Solved timeout issues by moving long-running checks to background Python threads and sending progress updates via WebSocket (Socket.IO).",
-            "Data Pipeline: Implemented dynamic backend querying with chunked/streamed responses for large filtered datasets.",
-            "Architectural Prototyping: Prototyped a React-based pilot to evaluate migration paths from vanilla JavaScript.",
-            "Team Enablement: Supported onboarding of new team members into internal tools and workflows.",
+            "Built an end-to-end internal finder tool with map visualizations, advanced filtering, and skeleton loaders.",
+            "Cut initial page load from 5-9s down to ~1.5s through server-side pagination and optimized data handling.",
+            "Reduced pagination latency from ~1.5s to nearly <0.2s using client-side caching and prefetching strategies.",
+            "Resolved timeout issues by moving long-running checks to background Python threads and sending progress updates via WebSocket.",
+            "Implemented dynamic backend querying with chunked/streamed responses for large filtered datasets.",
+            "Prototyped a React-based pilot to evaluate migration paths from vanilla JavaScript.",
+            "Supported onboarding of new team members into internal tools and workflows.",
           ],
         },
       ],
@@ -240,7 +243,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
           title: "Internal Data Explorer",
           summary: "Tool that makes large datasets browsable through maps, filters, and tables—turning hidden data into quick insights.",
           year: 2025,
-          impact: "Reduced analysis time from 50+ seconds to under 1 second—teams now explore datasets 50× faster",
+          impact: "Load time reduced from 5-9s down to ~1.5s with server-side optimizations and then cut pagination latency from ~1.5s to <0.2s with client-side caching and background prefetching. It alowed fast exploration of large datasets",
           stacks: ["JavaScript", "Bootstrap", "Flask", "Cosmos DB"],
           badge: "Internal · FEV Europe GmbH",
         },
@@ -275,7 +278,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Additional Knowledge",
-          items: ["Node.js / Express", "Docker"],
+          items: ["Node.js / Express", "Figma", "Docker"],
         },
       ],
     },
@@ -311,8 +314,9 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
     pageTitle: "Adnan Al-Khlaki — Portfolio (DE)",
     nav: {
       about: "Über mich",
-      experience: "Arbeit",
+      experience: "Erfahrung",
       projects: "Projekte",
+      skills: "Skills",
       contact: "Kontakt",
     },
     identity: {
@@ -322,7 +326,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
     },
     hero: {
       heading: "Adnan Al-khlaki",
-      summary: "Junior Full-Stack-Entwickler mit Frontend-Fokus in Aachen, spezialisiert auf schnelle und zugängliche Webanwendungen.",
+      summary: "Junior-Full-Stack-Entwickler ansässig in Aachen mit Schwerpunkt Frontend - Entwicklung schneller, barrierefreier Webanwendungen, die echte Leistungssteigerungen bieten.",
     },
     sectionLabels: {
       about: "02 — Über mich",
@@ -332,24 +336,24 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       contact: "06 — Kontakt",
     },
     about: {
-      heading: "Usable, production-ready Webanwendungen bauen.",
+      heading: "Entwicklung benutzerfreundlicher, produktionsreifer Webanwendungen.",
       paragraphs: [
-        "Ich bin ein Junior Full-Stack-Entwickler mit starkem Fokus auf Frontend und der Leidenschaft, saubere, benutzerfreundliche Interfaces zu bauen.",
-        "Derzeit schreibe ich meine Bachelorarbeit bei FEV Europe GmbH, während ich meinen B.Sc. in Informatik an der FH Aachen abschließe.",
-        "In meiner Arbeit konzentriere ich mich auf GenAI Observability — das Tracking, Bewerten und Verstehen des Verhaltens von LLMs in realen Systemen.",
+        "Ich bin Junior Full-Stack-Entwickler in Aachen - Frontend ist mein Hauptfeld, aber ich gehe auch gerne tiefer ins Backend, wenn das Problem es verlangt.",
+        "Derzeit schreibe ich meine Bachelorarbeit bei der FEV Europe GmbH und schließe gleichzeitig mein Bachelorstudium der Informatik an der FH Aachen ab.",
+        "Meine Abschlussarbeit befasst sich mit der Beobachtbarkeit von GenAI - es geht darum, herauszufinden, wie man das Verhalten von LLMs in realen Systemen sichtbar und messbar machen und so nutzen kann, dass man darauf reagieren kann.",
       ],
       metrics: [
         {
           id: "load",
-          before: "50s",
-          after: "<1s",
-          description: "Cold-Start- und Ladezeit in produktiven Abläufen durch Frontend-Optimierung deutlich reduziert",
+          before: "5s - 9s",
+          after: "~1.5s",
+          description: "Produktions-Kaltstart- und Ladezeit durch serverseitige Optimierung reduziert",
         },
         {
           id: "transition-delay",
           before: "~1.5s",
-          after: "0ms",
-          description: "Wahrgenommene Seitenwechsel-Verzögerung durch konsequentes Prefetching eliminiert",
+          after: "<0.2s",
+          description: "Pagination-Latenz - Prefetching im Hintergrund und Caching von bis zu 10 Seiten lässt die Navigation sofort wirken",
         },
       ],
     },
@@ -359,36 +363,37 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           title: "Bachelorarbeit: GenAI Observability & Monitoring",
           company: "FEV Europe GmbH",
-          period: "15.01.2026 - Heute (Vertrag bis 14.06.2026)",
+          period: "01.2026 - Heute (Geplanter Abschluss 06.2026)",
           bullets: [
-            "Forschungsschwerpunkt: Praktische Ansätze untersucht, um LLM-Pipelines in Produktion nachvollziehbar zu messen, zu bewerten und erklärbar zu machen.",
-            "Plattform-Evaluierung: Observability-Werkzeuge wie Langfuse für Tracing, Latenz und Feedback-Transparenz bewertet.",
-            "Implementierung: Einen Telemetrie-SDK-Prototypen entwickelt und in interne Workflows integriert.",
-            "Datenarchitektur: Ein einheitliches Telemetrie-Modell für Nutzungs-, Latenz- und Feedback-Signale entworfen.",
+            "Untersuchung praktischer Ansätze, um LLM-Pipelines in Produktion nachvollziehbar zu messen, zu bewerten und erklärbar zu machen.",
+            "Bewertung von Observability-Werkzeuge wie Langfuse für Tracing, Latenz und Feedback-Transparenz.",
+            "Integration von einem Telemetrie-SDK-Prototypen entwickelt und in interne Workflows.",
+            "Entwerfen eines einheitlichen Telemetrie-Modells für Nutzungs-, Latenz- und Feedback-Signale.",
           ],
         },
         {
-          title: "Frontend Developer — Werkstudent (extern bei FEV)",
+          title: "Full-Stack Developer — Werkstudent (extern bei FEV)",
           company: "RWTH MMP (Arbeitgeber) · FEV Europe GmbH (Einsatzort)",
-          period: "15.09.2025 - 14.01.2026",
+          period: "09.2025 - 01.2026",
           bullets: [
-            "Performance Engineering: Eine backend-lastige interne Review-Pipeline optimiert und die Analyselaufzeit durch Parallelisierung unabhängiger AI/API-Aufrufe von ~4,5 Minuten auf ~1 Minute reduziert.",
-            "Feature Ownership: Chatbasierte Explorationsfunktionen für AI-generierte Reports und Analyseergebnisse integriert.",
-            "Cross-Tool Impact: Responsive UI-Komponenten (komplexe Stepper und proprietäre Workflows) über insgesamt 10+ interne Tools aus Praktikums- und Werkstudentenphase hinweg gepflegt und weiterentwickelt.",
-            "Backend-Qualität: Flask-Komponenten refaktoriert und die API-Interaktionsperformance in Analysepipelines verbessert.",
+            "Optimierung einer backend-lastigen interne Review-Pipeline und Reduzierung der Analyselaufzeit durch Parallelisierung unabhängiger AI/API-Aufrufe von ~4,5 Minuten auf ~1 Minute.",
+            "Integration von Chatbasierte Explorationsfunktionen für AI-generierte Reports und Analyseergebnisse.",
+            "Umsetzung, weiterentwicklung und Wartung von Responsive UI-Komponenten (komplexe Stepper und proprietäre Workflows) über insgesamt 10+ interne Tools aus Praktikums- und Werkstudentenphase.",
+            "Code-Review, Refactoring von Flask-Komponenten und Verbesserung der API-Interaktionsleistung für Analyse-Pipelines",
           ],
         },
         {
-          title: "Frontend Developer — Praktikum",
+          title: "Full-Stack Developer — Praktikum",
           company: "FEV Europe GmbH",
-          period: "14.04.2025 - 29.08.2025",
+          period: "04.2025 - 08.2025",
           bullets: [
-            "Full-Stack Development: Ein internes Finder-Tool end-to-end (Frontend + Backend) mit Kartenvisualisierung, erweitertem Filtering und Skeleton Loadern umgesetzt.",
-            "Latency Optimization: Die wahrgenommene Pagination-Latenz durch Caching und Prefetching von ~1,5s auf nahezu 0ms reduziert.",
-            "Real-Time Systems: Timeout-Probleme gelöst, indem langlaufende Checks in Python-Hintergrundthreads liefen und Fortschritt via WebSocket (Socket.IO) übertragen wurde.",
-            "Data Pipeline: Dynamisches Backend-Querying mit chunked/streaming Antworten für große gefilterte Datensätze implementiert.",
-            "Architektur-Prototyping: Einen React-Pilot (Routing + Chat-UI) zur Evaluierung von Migrationspfaden aus Vanilla JavaScript erstellt.",
-            "Team Enablement: Onboarding neuer Teammitglieder in interne Tools und Workflows unterstützt.",
+            "Umsetzung eines internen Finder-Tool end-to-end (Frontend + Backend) mit Kartenvisualisierung, erweitertem Filtering und Skeleton Loadern.",
+            "Verkürzung der Ladezeit der Startseite von 5-9 Sekunden auf ~1,5 Sekunden durch serverseitige Paginierung und optimierte Datenverarbeitung.",
+            "Reduzierung der Paginierungslatenz von ~1,5 Sekunden auf knapp unter 0,2 Sekunden durch clientseitige Caching- und Prefetching-Strategien." ,
+            "Timeout-Probleme durch die Verlagerung lang laufender Prüfungen in Python-Hintergrund-Threads und die Übermittlung von Fortschrittsmeldungen über WebSocket gelöst",
+            "Dynamische Backend-Abfragen mit chunked/gestreamten Antworten für große, gefilterte Datensätze implementiert",
+            "Entwicklung eines React-basierten Prototyps zur Bewertung von Migrationspfaden von Vanilla JavaScript.",
+            "Unterstützung bei der Einarbeitung neuer Teammitglieder in interne Tools und Arbeitsabläufe.",
           ],
         },
       ],
@@ -426,9 +431,9 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         {
           id: "data-explorer",
           title: "Interner Data Explorer",
-          summary: "Datenvisualisierungstool für interne Workflows mit Karten, Filtern und tabellenintensiven Oberflächen.",
+          summary: "Tool, das große Datensätze durch Karten, Filter und Tabellen durchsuchbar macht - und so verborgene Daten in schnelle Einblicke verwandelt.",
           year: 2025,
-          impact: "Ladezeit in pagination-lastigen Abläufen von ~50s auf unter 1s reduziert",
+          impact: "Durch serverseitige Optimierungen wurde die Ladezeit von 5–9 Sekunden auf ca. 1,5 Sekunden verkürzt; anschließend wurde die Latenz bei der Paginierung durch clientseitiges Caching und Vorabruf im Hintergrund von ca. 1,5 Sekunden auf unter 0,2 Sekunden reduziert. Dies ermöglichte eine schnelle Auswertung großer Datensätze.",
           stacks: ["JavaScript", "Bootstrap", "Flask", "Cosmos DB"],
           badge: "Intern · FEV Europe GmbH",
         },
@@ -463,7 +468,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
         },
         {
           title: "Zusätzliche Kenntnisse",
-          items: ["Node.js / Express", "Docker"],
+          items: ["Node.js / Express", "Figma", "Docker"],
         },
       ],
     },
@@ -501,6 +506,7 @@ const portfolioContent: Record<Locale, PortfolioContent> = {
       about: "نبذة",
       experience: "الخبرة",
       projects: "المشاريع",
+      skills: "المهارات",
       contact: "تواصل",
     },
     identity: {
